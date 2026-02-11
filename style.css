@@ -116,8 +116,27 @@ button{font-family:inherit;cursor:pointer}
 .btn-whatsapp{display:inline-flex;align-items:center;justify-content:center;background:#25d366;color:#fff;padding:10px;border-radius:10px;box-shadow:0 8px 20px rgba(37,211,102,0.12)}
 
 /* Mobile hamburger */
-.mobile-menu-btn{display:none;border:0;background:transparent;padding:8px;cursor:pointer}
-.mobile-menu-btn span{display:block;width:22px;height:2px;background:var(--navy);margin:4px 0;border-radius:2px;transition:transform var(--duration-fast) var(--ease),opacity var(--duration-fast) var(--ease)}
+.mobile-menu-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.mobile-menu-btn span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background: var(--navy); /* or your preferred color */
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
 #mobile-menu-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(6px) rotate(45deg)}
 #mobile-menu-toggle[aria-expanded="true"] span:nth-child(2){opacity:0}
 #mobile-menu-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
@@ -166,7 +185,7 @@ button{font-family:inherit;cursor:pointer}
 /* Hero layout */
 .hero-inner{display:flex;align-items:center;gap:40px;flex-wrap:wrap;max-width:var(--max-width);margin:0 auto;padding:0 20px}
 .hero-left{flex:1 1 480px;min-width:260px}
-.hero-right{flex:0 1 480px;display:flex;justify-content:center;align-items:center;min-width:260px}
+.hero-right{flex:0 1 100px;display:flex;justify-content:center;align-items:center;min-width:260px}
 
 /* Headline */
 .hero-badge{display:inline-block;padding:8px 18px;border-radius:999px;background:rgba(0,97,255,0.08);color:var(--primary);font-weight:800;margin-bottom:18px}
@@ -208,7 +227,7 @@ h1{font-family:'Outfit',sans-serif;font-size:3.2rem;line-height:1.02;margin:0 0 
 /* =========================
    Services
    ========================= */
-.services-area{padding:120px 0;background:var(--card)}
+.services-area{padding:12px 0;background:var(--card)}
 .section-header{text-align:center;margin-bottom:48px}
 .section-header h2{font-family:'Outfit',sans-serif;font-size:2.2rem;margin-bottom:8px}
 .section-sub{color:var(--muted);margin-bottom:12px}
@@ -320,62 +339,231 @@ a:focus,button:focus,input:focus,select:focus,textarea:focus{
 .small-muted{font-size:0.9rem;color:var(--muted)}
 
 /* End of stylesheet */
-/* Grid Container */
-.why-us-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    padding: 2rem 0;
+.floating-contacts {
+  position: fixed;
+  right: 20px;          /* distance from right edge */
+  bottom: 20px;         /* distance from bottom */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;            /* spacing between buttons */
+  z-index: 9999;        /* stays above other elements */
 }
 
-/* Feature Cards */
-.why-card {
-    background: #ffffff;
-    border-radius: 20px;
-    padding: 2.5rem;
+.contact-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 20px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease;
+}
+
+.contact-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Individual colors */
+.phone-btn { background: #0061ff; }       /* Blue for phone */
+.mail-btn { background: #ff9800; }        /* Orange for mail */
+.whatsapp-btn { background: #25d366; }   /* Green for WhatsApp */
+/* ============================================================
+   ADJUSTABLE SCREEN ENGINE (Mobile & Tablet Responsiveness)
+   ============================================================ */
+
+/* TABLETS (Screens under 1024px) */
+@media (max-width: 1024px) {
+  .hero-inner, .pickup-wrapper {
+    gap: 30px;
+    padding: 0 15px;
+  }
+  h1 { font-size: 2.8rem; }
+}
+
+/* MOBILE LANDSCAPE / SMALL TABLETS (Screens under 992px) */
+@media (max-width: 992px) {
+  .hero-inner, .pickup-wrapper {
     display: flex;
-    align-items: flex-start;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border: 1px solid #e5e7eb;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    flex-direction: column; /* Stacks side-by-side elements vertically */
+    text-align: center;
+  }
+  .hero-left, .hero-right, .pickup-info, .pickup-form-container {
+    width: 100%;
+    flex: none;
+  }
+  .hero-ctas, .hero-trust {
+    justify-content: center;
+  }
+  .why-us-grid, .services-grid {
+    grid-template-columns: 1fr; /* One card per row for better readability */
+  }
+  .image-stack {
+    margin: 0 auto 30px;
+  }
 }
 
-/* Hover Animation */
-.why-card:hover {
-    transform: translateY(-12px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    border-color: #ff9800; /* Matching your orange theme */
+/* SMALL PHONES (Screens under 768px) */
+@media (max-width: 768px) {
+  /* Hides desktop navigation elements */
+  .nav-links, .nav-actions {
+    display: none; 
+  }
+  .mobile-menu-btn {
+    display: flex; /* Shows hamburger menu */
+  }
+  .hero-section {
+    padding: 100px 0 50px;
+    background-attachment: scroll; /* Improves performance on older phones */
+  }
+  h1 { font-size: 2rem; }
+  .form-grid {
+    grid-template-columns: 1fr; /* Stacks 'Name' and 'Phone' fields */
+  }
+  .footer-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .footer-brand img {
+    margin: 0 auto 15px;
+  }
 }
 
-/* Icon Container */
-.why-icon {
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
-    border-radius: 15px;
+/* EXTRA SMALL DEVICES (Screens under 480px) */
+@media (max-width: 480px) {
+  .hero-ctas {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .btn-main, .btn-outline {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+  .floating-contacts {
+    right: 10px;
+    bottom: 10px;
+  }
+}
+
+/* Container for the side-by-side layout */
+.pickup-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: flex-start; /* This aligns the heading and form to the exact same top line */
+}
+
+/* Align the heading to the top of the form */
+#pickup-heading {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 2.5rem;
+  line-height: 1.2;
+}
+
+.pickup-description {
+  margin-bottom: 30px;
+  color: var(--muted);
+}
+
+/* Address box refinement */
+.address-box {
+  background: #fff;
+  padding: 25px;
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--primary);
+  box-shadow: var(--shadow-soft);
+}
+
+.address-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  color: var(--primary);
+}
+
+.contact-box {
+  margin: 20px 0;
+}
+
+.contact-box a {
+  display: block;
+  font-weight: 700;
+  color: var(--navy);
+  margin-top: 5px;
+}
+
+.btn-maps {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffc107;
+  color: #000;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  transition: 0.3s;
+}
+
+.btn-maps:hover {
+  background: #e0a800;
+}
+
+/* Responsive adjustment for Tablets/Phones */
+@media (max-width: 992px) {
+  .pickup-wrapper {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+/* Update your Navbar container */
+.nav-inner {
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin-right: 1.5rem;
-    flex-shrink: 0;
+    justify-content: space-between; /* This pushes the logo to the left and actions to the right */
+    gap: 15px;
 }
 
-.why-icon i {
-    font-size: 1.5rem;
-    color: #f57c00; /* Deep orange icon color */
-}
-
-/* Text Styling */
-.why-text h4 {
-    color: #1f2937;
-    font-weight: 700;
-    margin-bottom: 0.75rem;
-    font-size: 1.25rem;
-}
-
-.why-text p {
-    color: #6b7280;
-    line-height: 1.6;
+/* Ensure the menu links don't squash the contact info */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    list-style: none;
     margin: 0;
-    font-size: 0.95rem;
+    padding: 0;
+}
+
+/* Hide the desktop nav links and contact numbers on mobile */
+@media (max-width: 1024px) {
+    .nav-links, 
+    .nav-actions .phone-link {
+        display: none; 
+    }
+    
+    /* Make sure the hamburger button is visible instead */
+    .mobile-menu-btn {
+        display: flex;
+    }
+}
+
+.brand-text .m-title {
+    font-weight: 800;
+    color: #0061ff; /* Blue */
+    display: block;
+    line-height: 1;
+}
+
+.brand-text .s-title {
+    font-size: 0.65rem;
+    color: #ff7300; /* Orange */
+    letter-spacing: 1px;
+    font-weight: 700;
 }

@@ -445,3 +445,48 @@
     normalizePhone
   };
 })();
+/* ============================================================
+   TRACKING & ADMIN SYSTEM LOGIC
+   ============================================================ */
+
+// 1. Function for the Home Page (index.html) Tracking Form
+window.handleTracking = (event) => {
+    event.preventDefault();
+    const trackId = document.getElementById('tracking-number').value.trim();
+    if (trackId) {
+        // Redirects to tracking.html with the ID in the URL
+        window.location.href = `tracking.html?id=${encodeURIComponent(trackId)}`;
+    }
+    return false;
+};
+
+// 2. Function for the Admin Page (admin.html) to Save Data
+window.saveTracking = () => {
+    const id = document.getElementById('new-id').value.toUpperCase().trim();
+    const status = document.getElementById('new-status').value.trim();
+    
+    if (!id || !status) {
+        alert("Please enter both ID and Status.");
+        return;
+    }
+
+    // Get existing data from storage or start empty
+    let trackingData = JSON.parse(localStorage.getItem('skyExpressData')) || {};
+    
+    // Add or Update the ID
+    trackingData[id] = status;
+    
+    // Save back to storage
+    localStorage.setItem('skyExpressData', JSON.stringify(trackingData));
+    
+    alert("Tracking ID " + id + " updated successfully!");
+    location.reload(); // Refresh to show in the list
+};
+
+// 3. Function to delete an ID (Admin only)
+window.deleteId = (id) => {
+    let trackingData = JSON.parse(localStorage.getItem('skyExpressData')) || {};
+    delete trackingData[id];
+    localStorage.setItem('skyExpressData', JSON.stringify(trackingData));
+    location.reload();
+};
